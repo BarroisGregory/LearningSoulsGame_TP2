@@ -3,8 +3,8 @@ package lsg.weapons;
 import static java.lang.String.format;
 
 public class Weapon{
-    String name;
-    int minDamage, maxDamage, stamCost, durability;
+    private String name;
+    private int minDamage, maxDamage, stamCost, durability;
 
     public Weapon(String name, int minDamage, int maxDamage, int stamCost, int durability){
         this.name = name;

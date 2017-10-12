@@ -1,10 +1,14 @@
 package lsg.characters;
 
+import lsg.helpers.Dice;
+import lsg.weapons.Weapon;
+
 import static java.lang.String.format;
 
 public class Character {
     private String name;
     private int life, maxLife, stamina, maxStamina;
+    private Dice dice;
 
     //accesseurs
 
@@ -53,6 +57,7 @@ public class Character {
         maxLife= val1;
         stamina = val2;
         maxStamina = val2;
+        dice = new Dice(101);
     }
 
     //toString
@@ -72,4 +77,29 @@ public class Character {
         return(this.getLife()>0);
     }
 
+    public int attackWith(Weapon weapon){
+        if (weapon.isBroken())
+            return 0;
+        else{
+            int pourcent = dice.roll();
+            weapon.use();
+            int difference = weapon.getMaxDamage()-weapon.getMinDamage();
+            int damage = (int)(weapon.getMinDamage() + ((difference*pourcent)/100.0));
+            if(stamina<weapon.getStamCost()){
+                if(stamina==0)
+                    return 0;
+                else {
+                    double difStamina = stamina/weapon.getStamCost();
+                    damage = (int)(damage*difStamina);
+                    stamina = 0;
+                    return damage;
+                }
+            }
+            else{
+                stamina = stamina - weapon.getStamCost();
+                return damage;
+            }
+
+        }
+    }
 }
