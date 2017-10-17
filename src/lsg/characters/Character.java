@@ -9,6 +9,7 @@ public class Character {
     private String name;
     private int life, maxLife, stamina, maxStamina;
     private Dice dice;
+    private Weapon weapon;
 
     //accesseurs
 
@@ -28,6 +29,9 @@ public class Character {
         return stamina;
     }
 
+    public Weapon getWeapon() {
+        return weapon;
+    }
 
     protected void setName(String name) {
         this.name = name;
@@ -47,6 +51,10 @@ public class Character {
 
     protected void setMaxStamina(int maxStamina) {
         this.maxStamina = maxStamina;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 
     public Character(){}
@@ -77,7 +85,7 @@ public class Character {
         return(this.getLife()>0);
     }
 
-    public int attackWith(Weapon weapon){
+    private int attackWith(Weapon weapon){
         if (weapon.isBroken())
             return 0;
         else{
@@ -101,5 +109,15 @@ public class Character {
             }
 
         }
+    }
+
+    public int attack(){
+        return (attackWith(weapon));
+    }
+
+    public int getHitWith(int val){
+        int pvRetire = ((val > life)? life :val);
+        life -= pvRetire;
+        return (pvRetire);
     }
 }
